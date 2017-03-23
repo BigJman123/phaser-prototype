@@ -8,6 +8,7 @@
 	<meta charset="UTF-8" />
 	<title>Game</title>
     <script src="//cdn.jsdelivr.net/phaser/2.6.2/phaser.min.js"></script>
+    <script type="text/javascript" src="player.js"></script>
     <style type="text/css">
         body {
             margin: 0;
@@ -21,7 +22,7 @@
 var game = new Phaser.Game(320, 568, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 var player;
-var blocks;
+var walls;
 var leftBlock;
 var rightBlock;
 
@@ -31,39 +32,34 @@ var direction = 1;
 
 var cursors;
 
-var blockMoving = false;
+var wallmoving = false;
 var gameRunning = false;
 
 function preload() {
     game.load.image('player', 'assets/player.png');
-    game.load.image('block', 'assets/block.png');
+    game.load.spritesheet('wall', 'assets/block.png');
 }
 
 function create() {
     
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.world.enableBody = true;
-
     
-    player = game.add.sprite(70, 450, 'player');
-    player.enableBody = true;
-    player.body.collideWorldBounds = true;
-    player.body.gravity.x = 0;
-    player.body.gravity.y = 0;
+    playerCreate(70, 450);
     
     game.physics.arcade.enable(player);
     // player.body.collideWorldBounds = true;
     
-    blocks = game.add.group();
-    blocks.enableBody = true;
+    walls = game.add.group();
+    walls.enableBody = true;
     
     game.stage.backgroundColor = '#5c5c5c';
     
-    leftBlock = blocks.create(0, 250, 'block');
-    leftBlock.body.immovable = true;
+    leftWall = walls.create(0, 250, 'wall');
+    leftWall.body.immovable = true;
     
-    rightBlock = blocks.create(160, 100, 'block');
-    rightBlock.body.immovable = true;
+    rightWall = walls.create(160, 100, 'wall');
+    rightWall.body.immovable = true;
     
     // game.add.tween(leftBlock).to({ y: 100 }, 1000, Phaser.Easing.Linear.None, false, 0, -1, false);
     
@@ -76,7 +72,7 @@ function create() {
 
 function update() {
     
-    var hitBlock = game.physics.arcade.collide(player, blocks);
+    var hitWall = game.physics.arcade.collide(player, walls);
 
     
     if (cursors.left.isDown) {
@@ -85,6 +81,9 @@ function update() {
     else if (cursors.right.isDown) {
         direction = 1;
     }
+    
+    playerUpdate();
+    
     
     if (cursors.left.isDown) {
         player.body.velocity.x = -200;
