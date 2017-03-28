@@ -1,21 +1,17 @@
 var Player = {};
 
-Player.locations = [
-    {x: 70, y: 450},
-    {x: 230, y: 450}
-];
-
-Player.currentLocation = 0;
+Player.locations = {
+    left: {x: 70, y: 450},
+    right: {x: 230, y: 450},
+};
 
 Player.create = function() {
-    player = game.add.sprite(Player.locations[Player.currentLocation].x, Player.locations[Player.currentLocation].y, 'player');
+    player = game.add.sprite(Player.locations.left.x, Player.locations.left.y, 'player');
     // player.enableBody = true;
     player.body.collideWorldBounds = true;
     player.body.gravity.x = 0;
     player.body.gravity.y = 0;
 }
-
-// Make this Player.Update
 
 Player.update = function(x, y) {
     if (cursors.left.isDown) {
@@ -26,28 +22,13 @@ Player.update = function(x, y) {
         Player.moveRight()
     }
 }
-// above
 
 Player.moveLeft = function() {
-    if (Player.currentLocation === 0) {
-        return false;
-    }
-    
-    Player.currentLocation -= 1;
-    Player.render();
+    player.x = Player.locations.left.x;
+    player.y = Player.locations.left.y;
 }
 
 Player.moveRight = function() {
-    if (Player.currentLocation === 1) {
-        return false;
-    }
-    
-    Player.currentLocation += 1;
-    Player.render();
+    player.x = Player.locations.right.x;
+    player.y = Player.locations.right.y;
 }
-
-Player.render = function() {
-    player.x = Player.locations[Player.currentLocation].x;
-    player.y = Player.locations[Player.currentLocation].y;
-}
-

@@ -22,7 +22,7 @@
 var game = new Phaser.Game(320, 568, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 var player;
-var walls;
+var blocks;
 var leftBlock;
 var rightBlock;
 
@@ -32,12 +32,12 @@ var direction = 1;
 
 var cursors;
 
-var wallmoving = false;
+var blockMoving = false;
 var gameRunning = false;
 
 function preload() {
     game.load.image('player', 'assets/player.png');
-    game.load.spritesheet('wall', 'assets/block.png');
+    game.load.spritesheet('block', 'assets/block.png');
 }
 
 function create() {
@@ -50,16 +50,16 @@ function create() {
     game.physics.arcade.enable(player);
     // player.body.collideWorldBounds = true;
     
-    walls = game.add.group();
-    walls.enableBody = true;
+    blocks = game.add.group();
+    blocks.enableBody = true;
     
     game.stage.backgroundColor = '#5c5c5c';
     
-    leftWall = walls.create(0, 250, 'wall');
-    leftWall.body.immovable = true;
+    leftblock = blocks.create(0, 250, 'block');
+    leftblock.body.immovable = true;
     
-    rightWall = walls.create(160, 100, 'wall');
-    rightWall.body.immovable = true;
+    rightblock = blocks.create(160, 100, 'block');
+    rightblock.body.immovable = true;
     
     // game.add.tween(leftBlock).to({ y: 100 }, 1000, Phaser.Easing.Linear.None, false, 0, -1, false);
     
@@ -72,16 +72,10 @@ function create() {
 
 function update() {
     
-    var hitWall = game.physics.arcade.collide(player, walls);
+    var hitblock = game.physics.arcade.collide(player, blocks);
 
     
-    if (cursors.left.isDown) {
-        direction = -1;
-    }
-    else if (cursors.right.isDown) {
-        direction = 1;
-    }
-    
+    Player.update();
     // playerUpdate();
     
     
