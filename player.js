@@ -17,7 +17,7 @@ Player.create = function() {
 
 // Make this Player.Update
 
-function playerLocation(x, y) {
+Player.update = function(x, y) {
     if (cursors.left.isDown) {
         Player.moveLeft();
     }
@@ -37,8 +37,8 @@ Player.moveLeft = function() {
     Player.render();
 }
 
-Player.moveLeft = function() {
-    if (Player.currentLocation === 4) {
+Player.moveRight = function() {
+    if (Player.currentLocation === 1) {
         return false;
     }
     

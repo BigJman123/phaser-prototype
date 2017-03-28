@@ -45,7 +45,7 @@ function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.world.enableBody = true;
     
-    playerCreate(locations[0].x, locations[0].y);
+    Player.create();
     
     game.physics.arcade.enable(player);
     // player.body.collideWorldBounds = true;
