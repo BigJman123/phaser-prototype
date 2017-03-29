@@ -1,5 +1,9 @@
 var Player = {};
 
+Player.preload = function() {
+    game.load.image('player', 'assets/player.png');
+}
+
 Player.locations = {
     left: {x: 70, y: 450},
     right: {x: 230, y: 450},
