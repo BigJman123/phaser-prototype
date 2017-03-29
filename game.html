@@ -31,6 +31,8 @@ var hitBlock;
 
 var direction = 1;
 
+var youlose = false;
+
 var cursors;
 
 var blockMoving = false;
@@ -70,8 +72,10 @@ function update() {
     
     Player.update();
     
-    if (hitBlock) {
+    if (hitBlock && youlose == false) {
+        youlose = true;
         player.destroy();
+        location.reload();
     }
 }
 
